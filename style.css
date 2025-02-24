@@ -1,0 +1,61 @@
+/* Full-page background */
+body {
+    background-image: url('bg.jpg'); /* Ensure bg.jpg is in the same folder as index.html */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Centered login box */
+.login-container {
+    background: rgba(0, 0, 0, 0.7); /* Transparent black */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Input fields */
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Checkbox & label */
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+/* Login button */
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: white;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Register link */
+p a {
+    color: yellow;
+    text-decoration: none;
+}
