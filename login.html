@@ -3,141 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoTo! - Login</title>
-    
+    <title>DoTo! - Home</title>
     <style>
-        @font-face {
-            font-family: 'Forte';
-            src: url('Forte.ttf') format('truetype'); /* Ensure Forte.ttf is in your project directory */
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-family: 'cambria', Times, serif, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background: url('bgLFF.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            background-color: black;
+            color: white;
+            text-align: center;
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 50px; /* Increased spacing */
+        /* Header Styling */
+        header {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
         }
 
         .logo {
-            font-size: 55px;
+            font-size: 32px;
             font-weight: bold;
-            color: rgb(238, 66, 36);
-            font-family: 'Forte', cursive; /* Forte for title */
-            text-shadow: 2px 2px 4px rgba(209, 206, 206, 0.5);
+            color: white;
         }
 
-        .subtitle {
-            font-size: 20px;
-            color: rgba(81, 80, 80, 0.8);
-            font-family: 'cascadia code', serif; /* Cambria for subtitle */
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            width: 350px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .input-box {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            color: rgb(71, 68, 68);
-            outline: none;
-            text-align: left;
-            font-family: 'Cambria', serif; /* Cambria for input fields */
-        }
-
-        .input-box::placeholder {
-            color: rgba(83, 81, 81, 0.8);
-        }
-
-        .remember-me {
+        .nav-menu {
             display: flex;
-            align-items: left;
-            color: rgb(109, 105, 105);
+            gap: 10px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: white;
             font-size: 14px;
-            margin: 10px 0;
-            justify-content: left;
-            font-family: 'Cambria', serif;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .remember-me input {
-            margin-right: 8px;
+        .nav-menu a:hover {
+            color: lightgray;
         }
 
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons a {
+            text-decoration: none;
             background: white;
             color: black;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
             transition: 0.3s;
-            font-family: 'Cambria', serif;
         }
 
-        .login-btn:hover {
+        .buttons a:hover {
             background: lightgray;
         }
 
-        .register {
-            margin-top: 15px;
-            color: rgb(124, 123, 127);
-            font-size: 15px;
-            font-family: 'Cambria', serif;
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('bgH.jpg') no-repeat center center/cover;
+            position: relative;
         }
 
-        .register a {
-            color: rgb(239, 0, 0);
-            text-decoration: underline;
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 1.5s ease-in-out;
+        }
+
+        /* Page Content Sections */
+        .content {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Aligning the menu and buttons to the right */
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
     </style>
-    <script>
-        function redirectToIndex() {
-            window.location.href = "index.html"; // Redirect to index page
-        }
-    </script>
 </head>
 <body>
-    <div class="logo-container">
+
+    <!-- Header Section -->
+    <header>
         <div class="logo">DataToDo!</div>
-        <div class="subtitle">A simple task management system</div>
+        <div class="nav-buttons">
+            <nav class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+            </nav>
+            <div class="buttons">
+                <a href="admin.html">Admin</a>
+                <a href="register.html">New User</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+        <h1>Welcome to DataToDo!</h1>
+        <p>Empowering businesses with data-driven insights and intuitive solutions.</p>
     </div>
 
-    <div class="login-container">
-        <input type="text" class="input-box" id="username" placeholder="Username">
-        <input type="password" class="input-box" id="password" placeholder="Password">
-        <div class="remember-me">
-            <input type="checkbox"> Remember me
+    <!-- Page Sections -->
+    <div class="content">
+        <div class="section" id="about">
+            <h2>About DoTo!</h2>
+            <p>DoTo! is a platform dedicated to providing cutting-edge analytics solutions to businesses and individuals. 
+                Our services range from data visualization, business intelligence, and automation tools to enhance your productivity.</p>
         </div>
-        <button class="login-btn" onclick="redirectToIndex()">Login</button>
-        <p class="register">Don't have an account? <a href="register.html">Register</a></p>
+
+        <div class="section" id="services">
+            <h2>Our Services</h2>
+            <p>We offer data analytics, business intelligence solutions, and automation services to help you grow.</p>
+        </div>
+
+        <div class="section" id="contact">
+            <h2>Contact Us</h2>
+            <p>Email: contact@doto.com</p>
+            <p>Phone: +91 9876543210</p>
+        </div>
     </div>
+
 </body>
 </html>
