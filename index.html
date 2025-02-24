@@ -103,7 +103,7 @@
         }
     </style>
     <script>
-        // Dummy admin credentials (replace with actual authentication)
+        // Dummy user database
         const users = {
             "admin1@example.com": "password123",
             "user@example.com": "userpass"
@@ -129,7 +129,7 @@
                 }
 
                 alert("Login Successful!");
-                window.location.href = "login.html"; // Redirect to login page
+                window.location.href = "index.html"; // Redirect to index.html or another dashboard page
             } else {
                 errorMessage.textContent = "Invalid Email or Password.";
                 errorMessage.style.display = "block";
@@ -155,7 +155,7 @@
             <input type="checkbox" id="remember-me"> Remember me
         </div>
         <button class="login-btn" onclick="loginUser()">Login</button>
-        <p class="register">Don't have an account? <a href="#">Register</a></p>
+        <p class="register">Don't have an account? <a href="register.html">Register</a></p>
     </div>
 </body>
 </html>
