@@ -4,47 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DoTo! - Login</title>
-    
     <style>
-        @font-face {
-            font-family: 'Forte';
-            src: url('Forte.ttf') format('truetype'); /* Ensure Forte.ttf is in your project directory */
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif, sans-serif;
         }
 
         body {
-            background: url('bgLFF.jpg') no-repeat center center fixed;
+            background: url('night.jpg.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-        }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 50px; /* Increased spacing */
-        }
-
-        .logo {
-            font-size: 55px;
-            font-weight: bold;
-            color: rgb(238, 66, 36);
-            font-family: 'Forte', cursive; /* Forte for title */
-            text-shadow: 2px 2px 4px rgba(209, 206, 206, 0.5);
-        }
-
-        .subtitle {
-            font-size: 20px;
-            color: rgba(81, 80, 80, 0.8);
-            font-family: 'cascadia code', serif; /* Cambria for subtitle */
         }
 
         .login-container {
@@ -58,6 +32,13 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 30px;
+        }
+
         .input-box {
             width: 100%;
             padding: 12px;
@@ -65,24 +46,29 @@
             border: none;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
-            color: rgb(71, 68, 68);
+            color: white;
             outline: none;
             text-align: left;
-            font-family: 'Cambria', serif; /* Cambria for input fields */
         }
 
         .input-box::placeholder {
-            color: rgba(83, 81, 81, 0.8);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+            margin-top: 5px;
         }
 
         .remember-me {
             display: flex;
-            align-items: left;
-            color: rgb(109, 105, 105);
+            align-items: center;
+            color: white;
             font-size: 14px;
             margin: 10px 0;
             justify-content: left;
-            font-family: 'Cambria', serif;
         }
 
         .remember-me input {
@@ -99,7 +85,6 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
-            font-family: 'Cambria', serif;
         }
 
         .login-btn:hover {
@@ -108,9 +93,8 @@
 
         .register {
             margin-top: 15px;
-            color: rgb(124, 123, 127);
+            color: rgb(250, 248, 255);
             font-size: 15px;
-            font-family: 'Cambria', serif;
         }
 
         .register a {
@@ -119,25 +103,59 @@
         }
     </style>
     <script>
-        function redirectToIndex() {
-            window.location.href = "index.html"; // Redirect to index page
+        // Dummy admin credentials (replace with actual authentication)
+        const users = {
+            "admin1@example.com": "password123",
+            "user@example.com": "userpass"
+        };
+
+        function loginUser() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMessage = document.getElementById("error-message");
+            const rememberMe = document.getElementById("remember-me").checked;
+
+            if (email === "" || password === "") {
+                errorMessage.textContent = "Please enter both email and password.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            if (users[email] && users[email] === password) {
+                if (rememberMe) {
+                    localStorage.setItem("rememberedEmail", email);
+                } else {
+                    localStorage.removeItem("rememberedEmail");
+                }
+
+                alert("Login Successful!");
+                window.location.href = "index.html"; // Redirect to index page
+            } else {
+                errorMessage.textContent = "Invalid Email or Password.";
+                errorMessage.style.display = "block";
+            }
         }
+
+        window.onload = function () {
+            const rememberedEmail = localStorage.getItem("rememberedEmail");
+            if (rememberedEmail) {
+                document.getElementById("email").value = rememberedEmail;
+                document.getElementById("remember-me").checked = true;
+            }
+        };
     </script>
 </head>
 <body>
-    <div class="logo-container">
-        <div class="logo">DataToDo!</div>
-        <div class="subtitle">A simple task management system</div>
-    </div>
-
     <div class="login-container">
-        <input type="text" class="input-box" id="username" placeholder="Username">
-        <input type="password" class="input-box" id="password" placeholder="Password">
+        <div class="logo">DoTo!</div>
+        <input type="email" class="input-box" id="email" placeholder="Enter your Email">
+        <input type="password" class="input-box" id="password" placeholder="Enter your Password">
+        <p class="error-message" id="error-message"></p>
         <div class="remember-me">
-            <input type="checkbox"> Remember me
+            <input type="checkbox" id="remember-me"> Remember me
         </div>
-        <button class="login-btn" onclick="redirectToIndex()">Login</button>
-        <p class="register">Don't have an account? <a href="register.html">Register</a></p>
+        <button class="login-btn" onclick="loginUser()">Login</button>
+        <p class="register">Don't have an account? <a href="#">Register</a></p>
     </div>
 </body>
 </html>
