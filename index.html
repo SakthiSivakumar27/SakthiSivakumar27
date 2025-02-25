@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoTo! - Login</title>
+    <title>DoTo! - Register</title>
     <style>
         * {
             margin: 0;
@@ -13,32 +13,28 @@
         }
 
         body {
-            background: url('night.jpg.jpg') no-repeat center center fixed;
+            background: url('bgLF.jpg.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
-        .login-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+        .register-container {
+            background: rgb(231, 215, 215);
             border-radius: 15px;
             padding: 30px;
             width: 350px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .logo {
             font-size: 35px;
             font-weight: bold;
-            color: white;
+            color: black;
             margin-bottom: 30px;
         }
 
@@ -46,157 +42,74 @@
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
             outline: none;
-            text-align: left;
         }
 
-        .input-box::placeholder {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            display: none;
-            margin-top: 5px;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            color: white;
-            font-size: 14px;
-            margin: 10px 0;
-            justify-content: left;
-            width: 100%;
-        }
-
-        .remember-me input {
-            margin-right: 8px;
-        }
-
-        .login-btn {
+        .register-btn {
             width: 100%;
             padding: 12px;
             border: none;
             border-radius: 5px;
-            background: white;
-            color: black;
+            background: black;
+            color: white;
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: 10px;
         }
 
-        .login-btn:hover {
-            background: lightgray;
+        .register-btn:hover {
+            background: gray;
         }
 
-        .forgot-password {
-            margin-top: 10px;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .forgot-password:hover {
-            color: lightgray;
-        }
-
-        .register {
+        .login-link {
             margin-top: 15px;
-            color: rgb(250, 248, 255);
+            color: black;
             font-size: 15px;
         }
 
-        .register a {
-            color: rgb(239, 0, 0);
+        .login-link a {
+            color: red;
             text-decoration: underline;
-            cursor: pointer;
         }
     </style>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Dummy user database
-            const users = {
-                "admin1@example.com": "password123",
-                "user@example.com": "userpass"
-            };
+        function registerUser() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-            const emailInput = document.getElementById("email");
-            const passwordInput = document.getElementById("password");
-            const errorMessage = document.getElementById("error-message");
-            const rememberMeCheckbox = document.getElementById("remember-me");
-
-            // Check if email is remembered
-            const rememberedEmail = localStorage.getItem("rememberedEmail");
-            if (rememberedEmail) {
-                emailInput.value = rememberedEmail;
-                rememberMeCheckbox.checked = true;
+            if (email === "" || password === "") {
+                alert("Please enter email and password!");
+                return;
             }
 
-            // Login Function
-            function loginUser() {
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
+            let users = JSON.parse(localStorage.getItem("users")) || [];
 
-                // Validate Inputs
-                if (email === "" || password === "") {
-                    errorMessage.textContent = "Please enter both email and password.";
-                    errorMessage.style.display = "block";
-                    return;
-                }
+            // Check if user already exists
+            const userExists = users.some(user => user.email === email);
 
-                // Check Credentials
-                if (users[email] && users[email] === password) {
-                    if (rememberMeCheckbox.checked) {
-                        localStorage.setItem("rememberedEmail", email);
-                    } else {
-                        localStorage.removeItem("rememberedEmail");
-                    }
-
-                    alert("Login Successful!");
-                    window.location.replace("login.html"); // Corrected redirection
-                } else {
-                    errorMessage.textContent = "Invalid Email or Password.";
-                    errorMessage.style.display = "block";
-                }
+            if (userExists) {
+                alert("User already registered! Please login.");
+                return;
             }
 
-            // Forgot Password Function
-            function forgotPassword() {
-                const email = prompt("Enter your email to reset your password:");
-                if (email && users[email]) {
-                    alert("Password reset link sent to your email!");
-                    // In a real system, this would trigger an actual email service
-                } else {
-                    alert("Email not found. Please enter a registered email.");
-                }
-            }
+            // Save new user
+            users.push({ email, password });
+            localStorage.setItem("users", JSON.stringify(users));
 
-            // Attach event listeners
-            document.getElementById("login-btn").addEventListener("click", loginUser);
-            document.getElementById("forgot-password").addEventListener("click", forgotPassword);
-        });
+            alert("Registration successful! Please login.");
+            window.location.href = "index.html"; // Redirect to index page
+        }
     </script>
 </head>
 <body>
-    <div class="login-container">
+    <div class="register-container">
         <div class="logo">DataToDo!</div>
-        <input type="email" class="input-box" id="email" placeholder="Enter your Email">
-        <input type="password" class="input-box" id="password" placeholder="Enter your Password">
-        <p class="error-message" id="error-message"></p>
-        <div class="remember-me">
-            <input type="checkbox" id="remember-me"> Remember me
-        </div>
-        <button class="login-btn" id="login-btn">Login</button>
-        <p class="forgot-password" id="forgot-password">Forgot Password?</p>
-        <p class="register">Don't have an account? <a href="register.html">Register</a></p>
+        <input type="email" class="input-box" id="email" placeholder="Email">
+        <input type="password" class="input-box" id="password" placeholder="Password">
+        <button class="register-btn" onclick="registerUser()">Register</button>
+        <p class="login-link">Already have an account? <a href="index.html">Login</a></p>
     </div>
 </body>
 </html>
