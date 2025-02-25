@@ -18,7 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .login-container {
@@ -30,6 +30,9 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .logo {
@@ -69,6 +72,7 @@
             font-size: 14px;
             margin: 10px 0;
             justify-content: left;
+            width: 100%;
         }
 
         .remember-me input {
@@ -85,10 +89,23 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         .login-btn:hover {
             background: lightgray;
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .forgot-password:hover {
+            color: lightgray;
         }
 
         .register {
@@ -104,46 +121,68 @@
         }
     </style>
     <script>
-        // Dummy user database
-        const users = {
-            "admin1@example.com": "password123",
-            "user@example.com": "userpass"
-        };
+        document.addEventListener("DOMContentLoaded", function () {
+            // Dummy user database
+            const users = {
+                "admin1@example.com": "password123",
+                "user@example.com": "userpass"
+            };
 
-        function loginUser() {
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
             const errorMessage = document.getElementById("error-message");
-            const rememberMe = document.getElementById("remember-me").checked;
+            const rememberMeCheckbox = document.getElementById("remember-me");
 
-            if (email === "" || password === "") {
-                errorMessage.textContent = "Please enter both email and password.";
-                errorMessage.style.display = "block";
-                return;
-            }
-
-            if (users[email] && users[email] === password) {
-                if (rememberMe) {
-                    localStorage.setItem("rememberedEmail", email);
-                } else {
-                    localStorage.removeItem("rememberedEmail");
-                }
-
-                alert("Login Successful!");
-                window.location.href = "index.html"; // Redirect to index.html or another dashboard page
-            } else {
-                errorMessage.textContent = "Invalid Email or Password.";
-                errorMessage.style.display = "block";
-            }
-        }
-
-        window.onload = function () {
+            // Check if email is remembered
             const rememberedEmail = localStorage.getItem("rememberedEmail");
             if (rememberedEmail) {
-                document.getElementById("email").value = rememberedEmail;
-                document.getElementById("remember-me").checked = true;
+                emailInput.value = rememberedEmail;
+                rememberMeCheckbox.checked = true;
             }
-        };
+
+            // Login Function
+            function loginUser() {
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                // Validate Inputs
+                if (email === "" || password === "") {
+                    errorMessage.textContent = "Please enter both email and password.";
+                    errorMessage.style.display = "block";
+                    return;
+                }
+
+                // Check Credentials
+                if (users[email] && users[email] === password) {
+                    if (rememberMeCheckbox.checked) {
+                        localStorage.setItem("rememberedEmail", email);
+                    } else {
+                        localStorage.removeItem("rememberedEmail");
+                    }
+
+                    alert("Login Successful!");
+                    window.location.replace("login.html"); // Corrected redirection
+                } else {
+                    errorMessage.textContent = "Invalid Email or Password.";
+                    errorMessage.style.display = "block";
+                }
+            }
+
+            // Forgot Password Function
+            function forgotPassword() {
+                const email = prompt("Enter your email to reset your password:");
+                if (email && users[email]) {
+                    alert("Password reset link sent to your email!");
+                    // In a real system, this would trigger an actual email service
+                } else {
+                    alert("Email not found. Please enter a registered email.");
+                }
+            }
+
+            // Attach event listeners
+            document.getElementById("login-btn").addEventListener("click", loginUser);
+            document.getElementById("forgot-password").addEventListener("click", forgotPassword);
+        });
     </script>
 </head>
 <body>
@@ -155,7 +194,8 @@
         <div class="remember-me">
             <input type="checkbox" id="remember-me"> Remember me
         </div>
-        <button class="login-btn" onclick="loginUser()">Login</button>
+        <button class="login-btn" id="login-btn">Login</button>
+        <p class="forgot-password" id="forgot-password">Forgot Password?</p>
         <p class="register">Don't have an account? <a href="register.html">Register</a></p>
     </div>
 </body>
