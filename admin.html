@@ -95,10 +95,13 @@
             const password = document.getElementById("admin-password").value.trim();
 
             if (adminData[adminId] && adminData[adminId].password === password) {
-                alert("Login Successful! Redirecting to Power BI Report...");
-                
-                // Redirect to the admin's specific Power BI report
-                window.location.href = adminData[adminId].reportUrl;  
+                alert("Login Successful! Redirecting to Dashboard...");
+
+                // ✅ Store report URL in sessionStorage
+                sessionStorage.setItem("reportUrl", adminData[adminId].reportUrl);
+
+                // ✅ Redirect to dashboard page
+                window.location.href = "dashboard.html";  
             } else {
                 alert("Invalid Admin ID or Password! Please try again.");
             }
@@ -119,4 +122,3 @@
     </div>
 </body>
 </html>
-
