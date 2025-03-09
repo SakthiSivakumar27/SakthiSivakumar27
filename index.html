@@ -19,6 +19,13 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            opacity: 0;
+            animation: fadeInBody 7s ease-in forwards; /* Very slow fade-in effect */
+        }
+
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .login-container {
@@ -33,6 +40,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            opacity: 0;
+            animation: fadeInContainer 1s ease-in forwards; /* Slow animation */
+        }
+
+        @keyframes fadeInContainer {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .logo {
@@ -40,6 +54,13 @@
             font-weight: bold;
             color: white;
             margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInText 5s ease-in forwards 2s; /* Delayed fade-in */
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .input-box {
@@ -52,17 +73,22 @@
             color: white;
             outline: none;
             text-align: left;
+            opacity: 0;
+            animation: fadeInElements 6s ease-in forwards 3s;
+        }
+
+        .login-btn, .forgot-password, .register {
+            opacity: 0;
+            animation: fadeInElements 6s ease-in forwards 4s;
+        }
+
+        @keyframes fadeInElements {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .input-box::placeholder {
             color: rgba(255, 255, 255, 0.8);
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-            display: none;
-            margin-top: 5px;
         }
 
         .remember-me {
@@ -73,6 +99,8 @@
             margin: 10px 0;
             justify-content: left;
             width: 100%;
+            opacity: 0;
+            animation: fadeInElements 6s ease-in forwards 3.5s;
         }
 
         .remember-me input {
@@ -122,7 +150,6 @@
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Dummy user database
             const users = {
                 "admin1@example.com": "password123",
                 "user@example.com": "userpass"
@@ -133,26 +160,22 @@
             const errorMessage = document.getElementById("error-message");
             const rememberMeCheckbox = document.getElementById("remember-me");
 
-            // Check if email is remembered
             const rememberedEmail = localStorage.getItem("rememberedEmail");
             if (rememberedEmail) {
                 emailInput.value = rememberedEmail;
                 rememberMeCheckbox.checked = true;
             }
 
-            // Login Function
             function loginUser() {
                 const email = emailInput.value.trim();
                 const password = passwordInput.value.trim();
 
-                // Validate Inputs
                 if (email === "" || password === "") {
                     errorMessage.textContent = "Please enter both email and password.";
                     errorMessage.style.display = "block";
                     return;
                 }
 
-                // Check Credentials
                 if (users[email] && users[email] === password) {
                     if (rememberMeCheckbox.checked) {
                         localStorage.setItem("rememberedEmail", email);
@@ -161,25 +184,22 @@
                     }
 
                     alert("Login Successful!");
-                    window.location.replace("login.html"); // Corrected redirection
+                    window.location.replace("login.html");
                 } else {
                     errorMessage.textContent = "Invalid Email or Password.";
                     errorMessage.style.display = "block";
                 }
             }
 
-            // Forgot Password Function
             function forgotPassword() {
                 const email = prompt("Enter your email to reset your password:");
                 if (email && users[email]) {
                     alert("Password reset link sent to your email!");
-                    // In a real system, this would trigger an actual email service
                 } else {
                     alert("Email not found. Please enter a registered email.");
                 }
             }
 
-            // Attach event listeners
             document.getElementById("login-btn").addEventListener("click", loginUser);
             document.getElementById("forgot-password").addEventListener("click", forgotPassword);
         });

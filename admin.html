@@ -19,6 +19,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            animation: bgScroll 40s linear infinite; /* Very slow background movement */
+        }
+
+        /* Very Slow Background Scrolling Animation */
+        @keyframes bgScroll {
+            from { background-position: center top; }
+            to { background-position: center bottom; }
         }
 
         .admin-container {
@@ -30,6 +37,14 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
+            position: relative;
+            animation: floatAnimation 15s ease-in-out infinite alternate; /* Very slow floating effect */
+        }
+
+        /* Very Slow Floating Animation for Admin Box */
+        @keyframes floatAnimation {
+            from { transform: translateY(0px); }
+            to { transform: translateY(15px); } /* Slow floating effect */
         }
 
         .input-group {
@@ -76,18 +91,10 @@
         }
     </style>
     <script>
-        // Admin credentials mapped to their Power BI report links
+        // Admin credentials with respective dashboard URLs
         const adminData = {
-            "admin001": { password: "pass001", reportUrl: "https://app.powerbi.com/view?r=admin001_report_link" },
-            "admin002": { password: "pass002", reportUrl: "https://app.powerbi.com/view?r=admin002_report_link" },
-            "admin003": { password: "pass003", reportUrl: "https://app.powerbi.com/view?r=admin003_report_link" },
-            "admin004": { password: "pass004", reportUrl: "https://app.powerbi.com/view?r=admin004_report_link" },
-            "admin005": { password: "pass005", reportUrl: "https://app.powerbi.com/view?r=admin005_report_link" },
-            "admin006": { password: "pass006", reportUrl: "https://app.powerbi.com/view?r=admin006_report_link" },
-            "admin007": { password: "pass007", reportUrl: "https://app.powerbi.com/view?r=admin007_report_link" },
-            "admin008": { password: "pass008", reportUrl: "https://app.powerbi.com/view?r=admin008_report_link" },
-            "admin009": { password: "pass009", reportUrl: "https://app.powerbi.com/view?r=admin009_report_link" },
-            "admin010": { password: "pass010", reportUrl: "https://app.powerbi.com/view?r=admin010_report_link" }
+            "admin001": { password: "pass001", reportUrl: "https://app.powerbi.com/reportEmbed?reportId=db8575fc-eda4-4ccc-a6e1-b8e56f81cba9&autoAuth=true&ctid=e6d0ae50-8d73-4eb2-acbc-4858b79c8ad1" },
+            "admin002": { password: "pass002", reportUrl: "https://app.powerbi.com/reportEmbed?reportId=e5e58fc7-ac48-4e4b-80d5-c0aa9022200b&autoAuth=true&ctid=e6d0ae50-8d73-4eb2-acbc-4858b79c8ad1" }
         };
 
         function loginAdmin() {
@@ -97,10 +104,11 @@
             if (adminData[adminId] && adminData[adminId].password === password) {
                 alert("Login Successful! Redirecting to Dashboard...");
 
-                // ✅ Store report URL in sessionStorage
+                // Store report URL and Admin ID in sessionStorage
                 sessionStorage.setItem("reportUrl", adminData[adminId].reportUrl);
+                sessionStorage.setItem("adminId", adminId);
 
-                // ✅ Redirect to dashboard page
+                // Redirect to the dashboard page
                 window.location.href = "dashboard.html";  
             } else {
                 alert("Invalid Admin ID or Password! Please try again.");
